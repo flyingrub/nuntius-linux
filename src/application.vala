@@ -580,7 +580,8 @@ public class Application : Gtk.Application {
             var sms_notification = get_sms_notification(id);
 
             if (sms_notification != null) {
-                sms_notification.send_sms_message(text);
+                var view = new TestSmsView(sms_notification);
+                view.show_all();
             }
         }
     }

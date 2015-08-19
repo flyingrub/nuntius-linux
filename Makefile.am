@@ -101,6 +101,7 @@ VALA_SOURCES = \
 	src/qrimage.vala \
 	src/smsnotification.vala \
 	src/testview.vala \
+	src/testsmsview.vala \
 	src/window.vala \
 	src/main.vala
 

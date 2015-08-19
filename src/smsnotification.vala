@@ -59,8 +59,8 @@ public class SmsNotification : Object {
         notification.set_icon(icon);
 
         // FIXME: just a test message until we have UI to type the reply
-        var variant = new Variant("(ss)", id, "Sent by Nuntius");
-        notification.add_button_with_target_value(_("Reply"),"app.send-sms", variant);
+        var variant = new Variant("(ss)", id, "nuntius");
+        notification.set_default_action_and_target_value("app.send-sms", variant);
 
         return notification;
     }
