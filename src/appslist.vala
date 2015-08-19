@@ -72,6 +72,8 @@ public class AppsList : Gtk.ListBox {
 
     private string? filter_text;
 
+    public Gtk.Menu blacklist_menu;
+
     public signal void selection_changed(NotificationApp? notification_app);
 
     construct {
@@ -90,6 +92,29 @@ public class AppsList : Gtk.ListBox {
             var row = new AppRow(napp);
             add(row);
         });
+
+        button_press_event.connect((event) =>{
+            if (event.button == 3) {
+                unselect_all();
+                select_row(get_row_at_y( (int) event.y));
+                create_menu(event);
+                return true;
+            }
+            return false;
+        });
+    }
+
+    /* Create menu for right button */
+    public void create_menu(Gdk.EventButton event) {
+        blacklist_menu = new Gtk.Menu();
+        Gtk.MenuItem blacklist = new Gtk.MenuItem.with_label ("Blacklist this app");
+        blacklist.activate.connect(() => {
+            var app = get_row_at_y( (int) event.y) as AppRow;
+            app.notification_app.blacklist();
+        });
+        blacklist_menu.append(blacklist);
+        blacklist_menu.show_all();
+        blacklist_menu.popup(null, null, null, event.button, event.get_time());
     }
 
     private void update_header(Gtk.ListBoxRow row, Gtk.ListBoxRow? before) {
